@@ -82,10 +82,11 @@ class ListTodos extends Component {
         if (title.value==="") {
             alert("Empty todo can't be inserted");
         } else {
+            const d = desc.value;
             data.unshift({
                 id: this.state.idCounter + 1,
                 title: title.value,
-                desc: desc.value,
+                desc: d === ""? "No Description":d,
                 isChecked: false,
                 isRemoved: false
             });
@@ -152,7 +153,6 @@ class ListTodos extends Component {
         });
         this.setState({ data });
         console.log("remove");
-
     }
     removeAll() {
         let data = this.state.data
@@ -162,6 +162,7 @@ class ListTodos extends Component {
             } 
         });
         this.setState({ data });
+
     }
     showAll() {
         let showAll = this.state.showAll;
@@ -197,8 +198,8 @@ class ListTodos extends Component {
                 <div id="selectionBar">
                     <a id='close' onClick={ ()=> this.closeselection() }>+</a>
                     <button id="showAll" onClick={ () =>this.showAll() }>{ this.state.showAll ? "Don't Show All" : "Show All Todos" }</button>
-                    <button id="remove" onClick={ () =>this.removed() }>Remove</button>
-                    <button id="removeAll" onClick={() => this.removeAll() }>Remove All</button>
+                    <button id="remove" onClick={ () => { if (window.confirm("Are you sure to remove?")) this.removed() }}>Remove</button>
+                    <button id="removeAll" onClick={() => { if (window.confirm("Are you sure to remove all?")) this.removeAll() } }>Remove All</button>
                     <button id="savework" onClick={() => this.savework() }>Save Work</button>
                 </div>
                 <div id='addtodo'>
